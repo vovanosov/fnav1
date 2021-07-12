@@ -115,7 +115,6 @@ pygame.mixer.init()
 gamebegin = pygame.mixer.Sound('./data/begin.wav')
 gamebegin.play(loops=-1)
 
-#hello
 
 while beg == True:
     for e in pygame.event.get():
