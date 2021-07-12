@@ -5,7 +5,7 @@ block_cipher = None
 
 
 a = Analysis(['fnav.py'],
-             pathex=['C:\\fnav'],
+             pathex=['C:\\Users\\miga2\\Documents\\GitHub\\fnav1'],
              binaries=[],
              datas=[],
              hiddenimports=[],
