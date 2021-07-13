@@ -33,6 +33,7 @@ napad = pygame.image.load("./data/napad.png")
 mask = pygame.image.load("./data/mask.png")
 maskbut = pygame.image.load("./data/maskbut.png")
 baterry = pygame.image.load("./data/baterry.png")
+palka = pygame.image.load("./data/pal.png")
 warning = pygame.image.load("./data/warning.png")
 red = pygame.image.load("./data/red.png")
 am = pygame.image.load("./data/6am.png")
@@ -91,8 +92,8 @@ def button():
 
 toks = 0 #Токсичность
 
-batt = 4000
-batt2 = 4000
+batt = 3000
+batt2 = 6
 
 clock = 0 #время
 
@@ -100,7 +101,13 @@ clock = 0 #время
 level = 1
 levell = 1
 
+xpal = []
+palind = 280
+kolpal = 5
 
+for i in range (0,6):
+    palind += 24
+    xpal.append(palind)
 
 beg = True #пока beg = True цикл меню будет работать
 
@@ -120,7 +127,7 @@ while beg == True: #цикл меню
         if e.type == pygame.MOUSEBUTTONUP: #Нажатие клавиши мыши
             x,y = e.pos
            
-            if inter2 (x,y,103,103,1,250,30): #Нажатие кнопки "новая игра"
+            if inter2 (x,y,272,200,1,250,30): #Нажатие кнопки "новая игра"
                 button() #звук кнопки
                 beg = False #Выход из цикла меню
                 level = 1 #возвращаемся в 1 ночь
@@ -136,11 +143,11 @@ while beg == True: #цикл меню
                 screen.blit(night, (500,350))
                 window.blit(screen, (0,0))
                 pygame.display.update()
-                time.sleep (3)
+                #time.sleep (3)
                 
                 gamebegin = pygame.mixer.stop()
                 
-            if inter2 (x,y,99,219,1,266,30): #Нажатие кнопки продолжить
+            if inter2 (x,y,256,326,1,266,30): #Нажатие кнопки продолжить
                 beg = False
                 button()
                 num = pygame.font.SysFont('monospace', 50)
@@ -153,7 +160,7 @@ while beg == True: #цикл меню
                 
                 gamebegin = pygame.mixer.stop()
                 
-            if inter2 (x,y,163,460,1,144,30): #Нажатие кнопки выход
+            if inter2 (x,y,326,569,1,144,30): #Нажатие кнопки выход
                 beg = False
                 Begin = False
             
@@ -343,7 +350,7 @@ class room(): #Хозяин дачи сидит у себя в комнате
                         batt -= 1
         
                         if batt % 500 == 0:
-                            batt2 = batt
+                            batt2 = batt // 500
                             
                            
                             
@@ -357,7 +364,9 @@ class room(): #Хозяин дачи сидит у себя в комнате
                         
                         if clock // 4000 == 6:
                             cam = False
-                           
+                          
+                        if toks != 0 and maska % 2 != 0:
+                            toks -= 1                          
                         
                         screen.fill ((0,140,0)) 
                        
@@ -372,23 +381,21 @@ class room(): #Хозяин дачи сидит у себя в комнате
                                 cammera = num.render('' + str(i+1) , True, (0, 0, 0))
                                 
                             if poz[i] == True and vovapoz == i and i == 2:
-                                num = pygame.font.SysFont('monospace', 50)
-                                cammera = num.render('' + str(i+1) , True, (0, 0, 0))
                                 
                                 screen.blit(baterry, (300,400))
-                                screen.blit(bat, (315,410))
-                                if inter1 (x,y,300,400,1,150):
+                                
+                                if inter1 (x,y,300,400,1,150) and batt2 < 6: #Нажатие на кнопку зарядки батареи
+                                    pygame.mixer.init()
+                                    box = pygame.mixer.Sound('./data/Blip3.wav')
+                                    box.play()
+                                    batt2 += 1
+                                    batt += 500
+                                    x = 0
+                                    y = 0
                                     
-                                    
-                                    if batt2 < 4000:
-                                        batt2 += 500
-                                        batt += 500
-                                        x = 0
-                                        y = 0
-                                    num = pygame.font.SysFont('monospace', 50)
-                                    bat = num.render('' + str(batt2) , True, (237, 28, 36))
-                                    screen.blit(baterry, (300,400))
-                                    screen.blit(bat, (315,410))
+                               
+                                for i in range (0,batt2):
+                                    screen.blit(palka, (xpal[i],405))
                                 
                                 
                             if poz[i] == True and vovapoz != i:
@@ -398,24 +405,27 @@ class room(): #Хозяин дачи сидит у себя в комнате
                                 
                                 if i == 2:
                                     
-                                    if inter1 (x,y,300,400,1,150):
+                                    if inter1 (x,y,300,400,1,150) and batt2 < 6: #Нажатие на кнопку зарядки батареи
                                         pygame.mixer.init()
                                         box = pygame.mixer.Sound('./data/Blip3.wav')
                                         box.play()
-                                        if batt2 < 4000:
-                                            batt2 += 500
-                                            batt += 500
+                                        batt2 += 1
+                                        batt += 500
                                         x = 0
                                         y = 0
-                                    num = pygame.font.SysFont('monospace', 50)
-                                    bat = num.render('' + str(batt2) , True, (237, 28, 36))
+                                        
+                                        
+                                    
                                     screen.blit(baterry, (300,400))
-                                    screen.blit(bat, (315,410))
+                                   
+                                    
+                                    for i in range (0,batt2):
+                                        screen.blit(palka, (xpal[i],405))
                                     
                             
                             
                                     
-                        if batt2 <= 2000:
+                        if batt2 <= 3:
                             screen.blit(warning, (1100,600))   
                         
                         
@@ -433,7 +443,7 @@ class room(): #Хозяин дачи сидит у себя в комнате
         
         
         if batt % 500 == 0:
-            batt2 = batt
+            batt2 = batt // 500
                         
         if vovapoz != -2:
             pv += 1
@@ -484,58 +494,11 @@ class room(): #Хозяин дачи сидит у себя в комнате
                 pygame.display.update()
                 time.sleep(24)
                 winn = pygame.mixer.stop()
-                
-            
-                
-            pygame.mixer.init()
-            buzzlight = pygame.mixer.Sound('./data/buzzlight.wav')
-            buzzlight.play(loops=-1)
-                
-            if level == 1:
-                nspeed = 1000
-            if level == 2:
-                nspeed = 800
-            if level == 3:
-                nspeed = 600
-            if level == 4:
-                nspeed = 400
-            if level == 5:
-                nspeed = 200
-            speed = nspeed
-            
-            if level == 1:
-                pygame.mixer.init()
-                night1 = pygame.mixer.Sound('./data/Night1.wav')
-                night1.play() 
-                  
-                
-                
-            if level == 2:
-                pygame.mixer.init()
-                night1 = pygame.mixer.Sound('./data/Night2.wav')
-                night1.play() 
-                  
-                 
-                
-            if level == 3:
-                pygame.mixer.init()
-                night1 = pygame.mixer.Sound('./data/Night3.wav')
-                night1.play() 
-                  
-                
-                
-            if level == 4:
-                pygame.mixer.init()
-                night1 = pygame.mixer.Sound('./data/Night4.wav')
-                night1.play() 
                   
                 
             
-            pygame.mixer.init()
-            buzzlight = pygame.mixer.Sound('./data/buzzlight.wav')
-            buzzlight.play(loops=-1)
+           
             
-            xphone = 1000
             
         screen.fill ((0,140,0)) 
         
@@ -649,33 +612,45 @@ class room(): #Хозяин дачи сидит у себя в комнате
             gamebegin = pygame.mixer.Sound('./data/begin.wav')
             gamebegin.play(loops=-1)
             
+            batt = 3000
+            batt2 = 6
+            
+            xpal = []
+            palind = 280
+            
+            xphone = 1000
+
+            for i in range (0,6):
+                palind += 24
+                xpal.append(palind)
+            
             while beg == True:
                 for e in pygame.event.get():
                     if e.type == pygame.MOUSEBUTTONUP: #Нажатие клавиши мыши
                         x,y = e.pos
                        
-                        if inter2 (x,y,103,103,1,250,30):
-                            button()
-                            beg = False
-                            begin = True
-                            level = 1
+                        if inter2 (x,y,272,200,1,250,30): #Нажатие кнопки "новая игра"
+                            button() #звук кнопки
+                            beg = False #Выход из цикла меню
+                            level = 1 #возвращаемся в 1 ночь
                             levell = level
                             f = open("./data/xxx.txt", "w")
                             f.write(str(levell))
                             f.close()
+                            
                             num = pygame.font.SysFont('monospace', 50)
                             night = num.render('Night: ' + str(level) , True, (255, 255, 255))
+                            
                             screen.fill ((0,0,0))
                             screen.blit(night, (500,350))
                             window.blit(screen, (0,0))
                             pygame.display.update()
-                            time.sleep (3)
+                            #time.sleep (3)
                             
                             gamebegin = pygame.mixer.stop()
                             
-                        if inter2 (x,y,99,219,1,266,30):
+                        if inter2 (x,y,256,326,1,266,30): #Нажатие кнопки продолжить
                             beg = False
-                            begin = True
                             button()
                             num = pygame.font.SysFont('monospace', 50)
                             night = num.render('Night: ' + str(level) , True, (255, 255, 255))
@@ -687,7 +662,7 @@ class room(): #Хозяин дачи сидит у себя в комнате
                             
                             gamebegin = pygame.mixer.stop()
                             
-                        if inter2 (x,y,163,460,1,144,30):
+                        if inter2 (x,y,326,569,1,144,30): #Нажатие кнопки выход
                             beg = False
                             Begin = False
                         
@@ -696,7 +671,53 @@ class room(): #Хозяин дачи сидит у себя в комнате
                 window.blit(screen, (0,0))
                 pygame.display.update()
                 
-        if batt2 <= 2000:
+                
+                
+            if level == 1:
+                nspeed = 1000
+            if level == 2:
+                nspeed = 800
+            if level == 3:
+                nspeed = 600
+            if level == 4:
+                nspeed = 400
+            if level == 5:
+                nspeed = 200
+            speed = nspeed
+            
+            if level == 1:
+                pygame.mixer.init()
+                night1 = pygame.mixer.Sound('./data/Night1.wav')
+                night1.play() 
+                  
+                
+                
+            if level == 2:
+                pygame.mixer.init()
+                night1 = pygame.mixer.Sound('./data/Night2.wav')
+                night1.play() 
+                  
+                 
+                
+            if level == 3:
+                pygame.mixer.init()
+                night1 = pygame.mixer.Sound('./data/Night3.wav')
+                night1.play() 
+                  
+                
+                
+            if level == 4:
+                pygame.mixer.init()
+                night1 = pygame.mixer.Sound('./data/Night4.wav')
+                night1.play() 
+                  
+                
+            
+            pygame.mixer.init()
+            buzzlight = pygame.mixer.Sound('./data/buzzlight.wav')
+            buzzlight.play(loops=-1)
+                
+        if batt2 <= 3:
             screen.blit(warning, (1100,600)) 
             
             
