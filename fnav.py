@@ -65,7 +65,7 @@ for g in range (0, 10):
     poz.append(True)
 
 Begin = True #Пока Begin = True программа работает
-cam = False
+cam = False # цикл Камера
 
 cambutton.set_colorkey((0,255,0))
 planshet.set_colorkey((0,255,0))
@@ -74,7 +74,7 @@ maskbut.set_colorkey((0,255,0))
 baterry.set_colorkey((0,255,0))
 warning.set_colorkey((0,255,0))
 
-vovapoz = 9
+vovapoz = 9 #Вовина позиция в камере
 pv = 1
 
 losee = False
@@ -89,21 +89,20 @@ def button():
 
 
 
-toks = 0
+toks = 0 #Токсичность
 
 batt = 4000
 batt2 = 4000
 
-clock = 0
+clock = 0 #время
 
-boox = False
 
 level = 1
 levell = 1
 
 
 
-beg = True
+beg = True #пока beg = True цикл меню будет работать
 
 f = open("./data/xxx.txt", "r")
 levell = f.read()
@@ -116,21 +115,23 @@ gamebegin = pygame.mixer.Sound('./data/begin.wav')
 gamebegin.play(loops=-1)
 
 
-while beg == True:
+while beg == True: #цикл меню
     for e in pygame.event.get():
         if e.type == pygame.MOUSEBUTTONUP: #Нажатие клавиши мыши
             x,y = e.pos
            
-            if inter2 (x,y,103,103,1,250,30):
-                button()
-                beg = False
-                level = 1
+            if inter2 (x,y,103,103,1,250,30): #Нажатие кнопки "новая игра"
+                button() #звук кнопки
+                beg = False #Выход из цикла меню
+                level = 1 #возвращаемся в 1 ночь
                 levell = level
                 f = open("./data/xxx.txt", "w")
                 f.write(str(levell))
                 f.close()
+                
                 num = pygame.font.SysFont('monospace', 50)
                 night = num.render('Night: ' + str(level) , True, (255, 255, 255))
+                
                 screen.fill ((0,0,0))
                 screen.blit(night, (500,350))
                 window.blit(screen, (0,0))
@@ -139,7 +140,7 @@ while beg == True:
                 
                 gamebegin = pygame.mixer.stop()
                 
-            if inter2 (x,y,99,219,1,266,30):
+            if inter2 (x,y,99,219,1,266,30): #Нажатие кнопки продолжить
                 beg = False
                 button()
                 num = pygame.font.SysFont('monospace', 50)
@@ -152,7 +153,7 @@ while beg == True:
                 
                 gamebegin = pygame.mixer.stop()
                 
-            if inter2 (x,y,163,460,1,144,30):
+            if inter2 (x,y,163,460,1,144,30): #Нажатие кнопки выход
                 beg = False
                 Begin = False
             
@@ -173,43 +174,44 @@ if level == 4:
 if level == 5:
     nspeed = 200
     
-speed = nspeed
+speed = nspeed #Скорость передвижения Вовы равна nspeed
 
-if level == 1:
+
+if level == 1: # Оператор разговаривает с тобой в 1 ночь
     pygame.mixer.init()
     night1 = pygame.mixer.Sound('./data/Night1.wav')
     night1.play() 
       
     
     
-if level == 2:
+if level == 2: # Оператор разговаривает с тобой в 2 ночь
     pygame.mixer.init()
     night1 = pygame.mixer.Sound('./data/Night2.wav')
     night1.play() 
       
      
     
-if level == 3:
+if level == 3: # Оператор разговаривает с тобой в 3 ночь
     pygame.mixer.init()
     night1 = pygame.mixer.Sound('./data/Night3.wav')
     night1.play() 
       
     
     
-if level == 4:
+if level == 4: # Оператор разговаривает с тобой в 4 ночь
     pygame.mixer.init()
     night1 = pygame.mixer.Sound('./data/Night4.wav')
     night1.play() 
       
-    
+   
   
 pygame.mixer.init()
 buzzlight = pygame.mixer.Sound('./data/buzzlight.wav')
 buzzlight.play(loops=-1) 
 
-xphone = 1000
+xphone = 1000 # X кнопки "завершить разговор"
   
-menu = False
+menu = False # При выигрыше или проигрыше, вы возвращаетесь в меню и menu = True
 
 class room(): #Хозяин дачи сидит у себя в комнате
 
@@ -222,22 +224,21 @@ class room(): #Хозяин дачи сидит у себя в комнате
             if j.type == pygame.MOUSEBUTTONUP: #Нажатие клавиши мыши
                x,y = j.pos
                
-               if inter2 (x, y, 300, 10, 1, 562, 60):
+               if inter2 (x, y, 300, 10, 1, 562, 60): #Кнопка "маска"
                     maska += 1 
-                    if maska % 2 == 0:
+                    if maska % 2 == 0: #Маска надета
                         pygame.mixer.init()
                         nadmask = pygame.mixer.Sound('./data/nadmask.wav')
                         nadmask.play()
                         
-                    if maska % 2 != 0:
+                    if maska % 2 != 0: #Маска снята
                         pygame.mixer.init()
                         snmask = pygame.mixer.Sound('./data/snmask.wav')
                         snmask.play()
                         
                         
-               if inter2 (x, y, 1000, 100, 1, 190, 84):
+               if inter2 (x, y, 1000, 100, 1, 190, 84): #Вы завершили разговор
                     xphone = 10000
-                    #pygame.mixer.init()
                     night1 = pygame.mixer.stop()
                     buzzlight.play(loops=-1) 
 
@@ -249,74 +250,72 @@ class room(): #Хозяин дачи сидит у себя в комнате
                     
                     if maska % 2 == 0:
                         maska += 1
-                    #class camera(): #Вы смотрите в камеру видеонаблюдения
-                    
                    
                     
-                    while cam == True:
+                    while cam == True: #Вы зашли в камеру
                         for jj in pygame.event.get():
                             if jj.type == pygame.MOUSEBUTTONUP:
                                x,y = jj.pos
                         
-                               if inter (x, y, 300, 625, 1, 562, 30):
+                               if inter (x, y, 300, 625, 1, 562, 30): 
                                     button()
                                     cam = False
                                
-                               if inter1 (x, y, 26, 58, 1, 77):
+                               if inter1 (x, y, 26, 58, 1, 77): #Button camera 1
                                     button()
                                     for ii in range (0, 10):
                                         poz[ii] = False
                                     poz[0] = True
                                     
-                               if inter1 (x, y, 146, 58, 1, 77):
+                               if inter1 (x, y, 146, 58, 1, 77): #Button camera 2
                                     button()
                                     for ii in range (0, 10):
                                         poz[ii] = False
                                     poz[1] = True
                                     
-                               if inter1 (x, y, 26, 151, 1, 77):
+                               if inter1 (x, y, 26, 151, 1, 77): #Button camera 3
                                     button()
                                     for ii in range (0, 10):
                                         poz[ii] = False
                                     poz[2] = True
                                     
-                               if inter1 (x, y, 146, 151, 1, 77):
+                               if inter1 (x, y, 146, 151, 1, 77): #Button camera 4
                                     button()
                                     for ii in range (0, 10):
                                         poz[ii] = False
                                     poz[3] = True
                                     
-                               if inter1 (x, y, 26, 250, 1, 77):
+                               if inter1 (x, y, 26, 250, 1, 77): #Button camera 5
                                     button()
                                     for ii in range (0, 10):
                                         poz[ii] = False
                                     poz[4] = True
                                     
-                               if inter1 (x, y, 146, 250, 1, 77):
+                               if inter1 (x, y, 146, 250, 1, 77): #Button camera 6
                                     button()
                                     for ii in range (0, 10):
                                         poz[ii] = False
                                     poz[5] = True
                                     
-                               if inter1 (x, y, 26, 350, 1, 77):
+                               if inter1 (x, y, 26, 350, 1, 77): #Button camera 7
                                     button()
                                     for ii in range (0, 10):
                                         poz[ii] = False
                                     poz[6] = True
                                     
-                               if inter1 (x, y, 146, 350, 1, 77):
+                               if inter1 (x, y, 146, 350, 1, 77): #Button camera 8
                                     button()
                                     for ii in range (0, 10):
                                         poz[ii] = False
                                     poz[7] = True
                                     
-                               if inter1 (x, y, 26, 450, 1, 77):
+                               if inter1 (x, y, 26, 450, 1, 77): #Button camera 9
                                     button()
                                     for ii in range (0, 10):
                                         poz[ii] = False
                                     poz[8] = True
                                     
-                               if inter1 (x, y, 146, 450, 1, 77):
+                               if inter1 (x, y, 146, 450, 1, 77): #Button camera 10
                                     button()
                                     for ii in range (0, 10):
                                         poz[ii] = False
@@ -541,16 +540,16 @@ class room(): #Хозяин дачи сидит у себя в комнате
         screen.fill ((0,140,0)) 
         
         
-        if vovapoz == -1:
+        if vovapoz == -1: # Вова у вас в комнате
             screen.blit(napad, (0,0))
             screen.blit(cambutton, (300,625))
             screen.blit(maskbut, (300,10))
             
             
-        if vovapoz == -2 and maska % 2 == 0:
+        if vovapoz == -2 and maska % 2 == 0: #Вова ушел из комнаты
             vovapoz = random.randint(1,4)
             
-        if vovapoz == -2 or batt2 <= 0:
+        if vovapoz == -2 or batt2 <= 0: # Если батарея закончилась или вова рядом с вами то вы умираете
             menu = True
             pygame.mixer.init()
             buzzlight = pygame.mixer.pause()
@@ -573,19 +572,19 @@ class room(): #Хозяин дачи сидит у себя в комнате
             time.sleep (5)
             pygame.mixer.music.stop()
                         
-        if vovapoz > -1:
+        if vovapoz > -1: 
             screen.blit(myroom, (0,0))
             screen.blit(cambutton, (300,625))
             screen.blit(maskbut, (300,10))
             
-        if maska % 2 == 0:
-            toks += 1
-            soundmask = True
+        if maska % 2 == 0: #Вы надели маску 
+        
+            toks += 1 # токсичность начинает повышаться
             screen.blit(mask, (0,0)) 
             screen.blit(maskbut, (300,10))
             screen.blit(toksic, (300,140)) 
             
-            if toks == 1500:
+            if toks == 1500: #Если токсичность равна 1500 то вы умираете
                 menu = True
                 pygame.mixer.init()
                 buzzlight = pygame.mixer.pause()
@@ -610,7 +609,7 @@ class room(): #Хозяин дачи сидит у себя в комнате
                
                 
                 
-        if menu == True:
+        if menu == True: # При выигрыше или проигрыше вы возвращаетесь в меню
             menu = False
             poz = []
 
@@ -642,9 +641,6 @@ class room(): #Хозяин дачи сидит у себя в комнате
             batt2 = 3000
 
             clock = 0
-
-            boox = False
-
 
             
             beg = True
