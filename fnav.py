@@ -143,7 +143,7 @@ while beg == True: #цикл меню
                 screen.blit(night, (500,350))
                 window.blit(screen, (0,0))
                 pygame.display.update()
-                #time.sleep (3)
+                time.sleep (3)
                 
                 gamebegin = pygame.mixer.stop()
                 
