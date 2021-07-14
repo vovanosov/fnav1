@@ -75,6 +75,7 @@ mask.set_colorkey((0,255,0))
 maskbut.set_colorkey((0,255,0))
 baterry.set_colorkey((0,255,0))
 warning.set_colorkey((0,255,0))
+baterry.set_colorkey((0,255,0))
 
 vovapoz = 9 #Вовина позиция в камере
 pv = 1
