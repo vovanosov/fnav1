@@ -1,0 +1,1 @@
+Переименуй "fnav.txt" на "fnav.exe"
