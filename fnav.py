@@ -41,6 +41,7 @@ nachalo = pygame.image.load("./data/Begin.png")
 phone = pygame.image.load("./data/phone.png")
 win = pygame.image.load("./data/win.png")
 gameover = pygame.image.load("./data/gameover.png")
+infa = pygame.image.load("./data/infa.png")
 
 
 videofile = []
@@ -160,6 +161,25 @@ while beg == True: #цикл меню
                 
                 gamebegin = pygame.mixer.stop()
                 
+            if inter2 (x, y, 191, 447, 1, 432, 84):
+                info = True
+                while info == True:
+                    for t in pygame.event.get():
+                        if t.type == pygame.KEYUP and t.key == pygame.K_ESCAPE:
+                           Begin = False
+                           info = False
+                            
+                        if t.type == pygame.MOUSEBUTTONUP: #Нажатие клавиши мыши
+                           x,y = t.pos
+                           
+                           if inter2 (x, y, 1091, 685, 1, 150, 84):
+                                info = False
+                        
+                    screen.fill ((255,255,255))
+                    screen.blit(infa, (0,0))
+                    window.blit(screen, (0,0))
+                    pygame.display.update()
+                
             if inter2 (x,y,326,569,1,144,30): #Нажатие кнопки выход
                 beg = False
                 Begin = False
@@ -220,6 +240,8 @@ xphone = 1000 # X кнопки "завершить разговор"
   
 menu = False # При выигрыше или проигрыше, вы возвращаетесь в меню и menu = True
 
+info = False
+
 class room(): #Хозяин дачи сидит у себя в комнате
 
     while Begin == True:
@@ -249,6 +271,7 @@ class room(): #Хозяин дачи сидит у себя в комнате
                     night1 = pygame.mixer.stop()
                     buzzlight.play(loops=-1) 
 
+               
                
                if inter2 (x, y, 300, 625, 1, 562, 60) and maska % 2 != 0: #Вы нажали на кнопку "камера"
                     button()
@@ -661,7 +684,26 @@ class room(): #Хозяин дачи сидит у себя в комнате
                             time.sleep (3)
                             
                             gamebegin = pygame.mixer.stop()
-                            
+                        
+                        if inter2 (x, y, 191, 447, 1, 432, 84):
+                            info = True
+                            while info == True:
+                                for t in pygame.event.get():
+                                    if t.type == pygame.KEYUP and t.key == pygame.K_ESCAPE:
+                                       Begin = False
+                                       info = False
+                                        
+                                    if t.type == pygame.MOUSEBUTTONUP: #Нажатие клавиши мыши
+                                       x,y = t.pos
+                                       
+                                       if inter2 (x, y, 1091, 685, 1, 150, 84):
+                                            info = False
+                                    
+                                screen.fill ((255,255,255))
+                                screen.blit(infa, (0,0))
+                                window.blit(screen, (0,0))
+                                pygame.display.update()
+                        
                         if inter2 (x,y,326,569,1,144,30): #Нажатие кнопки выход
                             beg = False
                             Begin = False
